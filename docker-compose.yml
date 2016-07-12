@@ -1,0 +1,25 @@
+web:
+  build: .
+  command:  node index.js
+  environment:
+    - NODE_ENV = development
+    - MONGODB_ADDRESS = db
+  ports:
+    - '3000:3000'
+  volumes:
+    - .:/home/app/settled 
+    - /home/app/settled/node_modules
+
+  # links:
+  # - db
+
+# db:
+#   image: mongo:3.2
+#   container_name: db
+#   restart: always
+#   ports:
+#    - "27017:27017"
+#   volumes:
+#    - db:/data/db
+
+    

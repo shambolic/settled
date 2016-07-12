@@ -1,0 +1,27 @@
+{
+  "name": "settled",
+  "version": "1.0.0",
+  "description": "jay johnston - CTO tech challenge ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shambolic/settled.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shambolic/settled/issues"
+  },
+  "homepage": "https://github.com/shambolic/settled#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "halson": "^2.3.1",
+    "mongodb": "^2.2.1",
+    "mongoose": "^4.5.4"
+  }
+}

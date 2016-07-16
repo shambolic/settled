@@ -1,0 +1,39 @@
+* { 
+	margin: 0; 
+	padding: 0; 
+}
+body { 
+	font: 14px/1.4 Georgia, Serif; 
+  margin-left: 25px;
+}
+#page-wrap {
+	margin: 50px;
+}
+h1 h2 {
+  padding: 25px;
+  
+}
+p {
+	margin: 20px 0; 
+}
+
+	table { 
+		width: 90%; 
+		border-collapse: collapse; 
+    margin-left: auto;
+    margin-right: auto;
+	}
+	/* Zebra striping */
+	tr:nth-of-type(odd) { 
+		background: #eee; 
+	}
+	th { 
+		background: #333; 
+		color: white; 
+		font-weight: bold; 
+	}
+	td, th { 
+		padding: 6px; 
+		border: 1px solid #ccc; 
+		text-align: left; 
+	}

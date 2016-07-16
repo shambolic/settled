@@ -1,0 +1,62 @@
+<!doctype html>
+<html ng-app="settledUsers">
+	<head>
+		<title>Settled CTO Test</title>
+		<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.4.12/angular.min.js"></script>
+    <script src="js/app.js"></script>
+   <link rel="stylesheet" type="text/css" href="css/main.css">
+	</head>
+
+	<body ng-controller="settledUsersController as users">
+<h1>Settled.co.uk - User Management </h1>
+ 
+		<table>
+    <tr>
+    <th>User Name</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Email</th>  
+    <th>Date Created</th>      
+    <th>Status</th>
+    <th>Actions</th>
+  </tr>
+    
+      <tr ng-repeat= "user in users">
+    	<td> {{user.username}} </td>
+			<td> {{user.firstName}}</td>
+			<td> {{user.lastName}}</td>
+			<td> {{user.email}}</td>
+			<td> {{user.createdAt}}</td>
+			<td> {{user.status}}</td>
+      <td> <a ng-click="editUser(user)" class="button">Edit</a> | <a ng-click="removeUser(user)" class="button">Delete</a> </td>
+        
+      </tr>
+      </table>
+</br>
+<h2>Add Users</h2>   <!-- Form for Adding Users -->
+  <form ng-submit="addUser()">
+    <table>
+      <tr>
+        <td>User Name</td>
+        <td><input type="text" ng-model="form.username" size="60" required ></td>
+      </tr>
+      <tr>
+        <td>First Name</td>
+        <td><input type="text" ng-model="form.firstName" size="60" required ></td>
+      </tr>
+      <tr>
+        <td>Last Name</td>
+        <td><input type="text" ng-model="form.lastName" size="60" required ></td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td><input type="email" ng-model="form.email" size="60"></td>
+      </tr>
+      <tr>
+          <td colspan="2"><input type="submit" value="Submit" /></td>
+      </tr> 
+    </table>
+    
+  </form>
+	</body>
+</html>

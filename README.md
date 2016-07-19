@@ -11,6 +11,7 @@
 * 'eventual consistency' principle for updating inboxes is acceptable in order to preserve system performace (and less likely given prevalence of one-to-one messaging).  revisit if update time > 15s
 
 ##Design
+
 ###tech stack w/ pro's and con's
 * infrastructure (AWS + docker + ECS)
    * 'all in' on AWS
@@ -101,6 +102,7 @@
   * threaded messages
   * attachments [pictures, video links]
   * push notifications
+  * etc...
 * consider [fan out on write pattern (with buckets)](http://blog.mongodb.org/post/65612078649/schema-design-for-social-inboxes-in-mongodb) for scaling that optimises for Reads.
 * further scale can be achieved with an asynchronous service model like [Socialite](https://github.com/mongodb-labs/socialite)
 
@@ -108,9 +110,11 @@
 * very simple CRUD implmentation for Users on Angular + Node + Express + Mongo + Docker
 * hadn't had much chance to use Docker previously so enjoyed having a good play around (though i probably burnt too much time on this part of the task =).
 * haven't written any tests! nor have i setup a build pipeline with gulp. would be the next job on my list (karma, mocha and should.js installed),  firing the tests on every build (and eventually every commit once hooked into Jenkins or similar). 
+
 ##Installation Instructions
+
 1. clone this github repo into a local directory: https://github.com/shambolic/settled
 2. run ./setup.sh
-* assumes (and tries to download and install) Docker for Mac.  if you are installing from fresh you will need to:
+  * assumes (and tries to download and install) Docker for Mac.  if you are installing from fresh you will need to:
 3. enter su credentials
-* NB:there are some known issues with Docker for Mac releasing ports.  if you enconter any pconflicts, they are  usually solved by restarting the servic.e 
+  * NB:there are some known issues with Docker for Mac releasing ports.  if you enconter any pconflicts, they are  usually solved by restarting the servic.e 

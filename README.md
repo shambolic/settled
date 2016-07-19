@@ -20,6 +20,8 @@
      *  AWS: the best cloud provider,  ECS is probably the most sophisticated container management services, all services in one place reduces complexity, credits for Startups - AWS Activate 
      * Docker: portability, reinforces SOA/microservices design principles, strong configuration management (version controlled).
    * con's:  scheduling and scaling containers can be more complex than autoscaling VMs  (this will likely change at AWS over time)
+   * centralilsed logging using logstash/elastic
+   * monitoring:  new relic for application performance, AWS cloud watch -> pager duty for alerting.
 * mongoDB
   * pros:  fast, open source, highly resilient, trivial to scale horizontally (sharding), consistent with existing tech choices, data model is easily extensible and adaptable, queries are simpler
   * cons: not optimal for reporting/ highly relational data, still maturing (compared to other open source RDBMS)
@@ -94,9 +96,13 @@
   * rationale: simple to implement, not a large number of messages or viewing_requests per user anticipated (100s max), messages and viewing_requests can be extended and queried separately. 
   * two writes per send could require optimising at a later stage (i.e. 100's of operations per second). probably some ways off and can be addressed with asynchronous workers.
   * indexes:
-    * db.message|viewing_request.createIndex( {to: 1, from: 1, time_created: 1} )  // compound index allows faster sorting on sender, recipient and date
+    * compound indexes for: db.message & viewing_request.createIndex( {to: 1, from: 1, time_created: 1} )  // compound index allows faster sorting on sender, recipient and date
   * sharding: 
-    * messages by user (will try to ensure faster reads by storing messages for a given user on the same shard)
+    * shard key: sh.shardCollection.("settled.message", {from : 1})  - will try to ensure faster reads by storing messages for a given user on the same shard, 
+    * hash-based
+  * benchmarking: ideally load tests should be run against a large dummy data set in a few different considerations using something like jMeter to validate the design principles
+  * use AWS Cloud Manager for deployment, backup and scaling mongoDB
+  
 
 ###plan
 * consider rapid prototype messaging feature in a [1 week Sprint](http://www.gv.com/sprint/). create a beta user group with some incentive to feedback.  
@@ -109,6 +115,7 @@
   * etc...
 * consider [fan out on write pattern (with buckets)](http://blog.mongodb.org/post/65612078649/schema-design-for-social-inboxes-in-mongodb) for scaling that optimises for Reads.
 * further scale can be achieved with an asynchronous service model like [Socialite](https://github.com/mongodb-labs/socialite)
+* remember [Gall's Law](https://en.wikipedia.org/wiki/John_Gall_(author)#Gall.27s_law):  a working complex system has always evolved from a working simple system. i.e. don't make your initial designs too complicated.
 
 #Prototype
 * very simple CRUD implementation for Users on Angular + Node + Express + Mongo + Docker

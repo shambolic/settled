@@ -20,8 +20,11 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
+    "generator-karma": "^2.0.0",
     "halson": "^2.3.1",
+    "karma": "^1.1.1",
     "mongodb": "^2.2.1",
-    "mongoose": "^4.5.4"
+    "mongoose": "^4.5.4",
+    "should": "^9.0.2"
   }
 }

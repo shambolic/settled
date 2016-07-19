@@ -51,7 +51,7 @@ controller('settledUsersController', ['$scope', '$http',
     $scope.removeUser = function(user) {
       $http({
         method: 'DELETE',
-        url: appURL + "/" + user._id
+        url: "http://localhost:3001/users/" + user._id
       }).then(function successCallback(response) {
         $scope.status = response.status;
         console.log($scope.status);
@@ -59,7 +59,6 @@ controller('settledUsersController', ['$scope', '$http',
       }, function errorCallback(response) {
         console.log(response.status);
       });
-     
       _clearForm();
     } // end of Remove
     $scope.editUser = function(user){  // simply populates form with existing data for editing
@@ -68,8 +67,7 @@ controller('settledUsersController', ['$scope', '$http',
       $scope.form.lastName = user.lastName; 
       $scope.form.email = user.email;
       $scope.form.id = user._id;
-      console.log(user._id);
-      
+      console.log(user._id); 
     }
     
     // local functions 

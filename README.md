@@ -49,6 +49,7 @@
   
 
 ####schema
+                                                                                                                                             
                                    ┌──────────────────────────────────────────────────────────────┐                                          
                                    │                           ┌────────┐                         │                                          
                                    │                           │db.user │                         │                                          
@@ -62,9 +63,9 @@
                                    │   │- date_created, DateTime                              │   │         │ ┌──────────────────────────┐  │
                                    │   │- user_status, Boolean                                │   │         │ │- id                      │  │
                                    │   │- email_address, String                               │   │         │ │- ....                    │  │
-                                   │ │ │- messages, [ObjectID(message.id)]                    │   │         │ │                          │  │
-                                   │ │ │- viewing_requests, [ObjectID(viewing_request.id)]  │ │   │         │ │                          │  │
-                                   │ │ │- message_count, Int                                │ │   │         │ └──────────────────────────┘  │
+                                   │ │ │- message_count, Int                                  │   │         │ │                          │  │
+                                   │ │ │- view_request_count, Int                           │ │   │         │ │                          │  │
+                                   │ │ │                                                    │ │   │         │ └──────────────────────────┘  │
                                    │ │ │                                                    │ │   │         │                               │
                                    │ │ └────────────────────────────────────────────────────┼─┘   │         └─────────────────┬─────┼───────┘
                                    │┌┘                                                      └─────┼─┐                         │              
@@ -72,28 +73,27 @@
                                    └┼─────────────────────────────────────────────────────────────┘ │                         │              
                                     │                                                               │                         │              
                                     ○                                                               ○                         │              
-                                   ╱│╲                                                          ╱│╲                       │              
+                                   ╱│╲                                                             ╱│╲                        │              
                   ┌─────────────────────────────────────────────────────┐    ┌──────────────────────────────────────────┐     │              
                   │           ┌──────────────────────────┐              │    │         ┌─────────────────────┐          │     │              
                   │           │        db.message        │              │    │         │ db.viewing_request  │          │     │              
                   │           └──────────────────────────┘              │    │         └─────────────────────┘          │╲    │              
                   │   ┌─────────────────────────────────────────┐       │    │  ┌─────────────────────────────────────┐ │─○───┘              
                   │   │- _id                                    │       │    │  │- _id                                │ │╱                   
-                  │   │- from, ObjectID(user.id)                │       │    │  │- property, ObjectID(property.id)    │ │                    
-                  │   │- to, [ObjectID(user.id]                 │       │    │  │- requested_time, Date               │ │                    
-                  │   │- message_body, String                   │       │    │  │- request_status, String (i.e.       │ │                    
-                  │   │- time_created, DateTime                 │       │    │  │accepted, rejected, unscheduled)     │ │                    
-                  │   │- status, String (i.e. read/unread)      │       │    │  │- viewing_notes,                     │ │                    
+                  │   │- from, ObjectID(user.id)                │       │    │  │- requestor, ObjectId(user.id)       │ │                    
+                  │   │- to, [ObjectID(user.id]                 │       │    │  │- property, ObjectID(property.id)    │ │                    
+                  │   │- message_body, String                   │       │    │  │- requested_time, Date               │ │                    
+                  │   │- time_created, DateTime                 │       │    │  │- request_status, String (i.e.       │ │                    
+                  │   │- status, String (i.e. read/unread)      │       │    │  │accepted, rejected, unscheduled)     │ │                    
+                  │   │                                         │       │    │  │- viewing_notes,                     │ │                    
                   │   │                                         │       │    │  │    {   date_added: DateTime,        │ │                    
-                  │   │                                         │       │    │  │        added_by: String,            │ │                    
-                  │   └─────────────────────────────────────────┘       │    │  │        note: String   }             │ │                    
+                  │   └─────────────────────────────────────────┘       │    │  │        added_by: String,            │ │                    
                   │                                                     │    │  └─────────────────────────────────────┘ │                    
                   └─────────────────────────────────────────────────────┘    └──────────────────────────────────────────┘                    
                                                                                                                                              
   
 ####implementation
-  * collections:  db.User, db.Message and db.viewing_request.  User object stores an array of references to messages and viewing requests.
-  * rationale: simple to implement, not a large number of messages or viewing_requests per user anticipated (100s max), messages and viewing_requests can be extended and queried separately. 
+  * collections:  db.User, db.Message and db.viewing_request, db.property.  users, messages and viewing_requests are linked.
   * two writes per send could require optimising at a later stage (i.e. 100's of operations per second). probably some ways off and can be addressed with asynchronous workers.
   * indexes:
     * compound indexes for: db.message & viewing_request.createIndex( {to: 1, from: 1, time_created: 1} )  // compound index allows faster sorting on sender, recipient and date
